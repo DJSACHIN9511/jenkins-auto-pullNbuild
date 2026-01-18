@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration</title>
+  <style>
+    :root {
+      --bg: #0f172a;      /* slate-900 */
+      --card: #111827;    /* gray-900 */
+      --text: #e5e7eb;    /* gray-200 */
+      --muted: #9ca3af;   /* gray-400 */
+      --accent: #22c55e;  /* green-500 */
+      --accent-2: #3b82f6;/* blue-500 */
+      --border: #1f2937;  /* gray-800 */
+      --error: #ef4444;   /* red-500 */
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% 10%, #1f2937 0, transparent 60%),
+                  radial-gradient(1000px 500px at 90% 20%, #0b5ed7 0, transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    p.sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      margin: 14px 0 6px;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #0b1220;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(59,130,246,.15);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 8px; top: 50%; transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 6px 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button[type="submit"], button[type="reset"] {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: .2px;
+      background: #101827;
+      color: var(--text);
+      transition: transform .02s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      border-color: transparent;
+      box-shadow: 0 8px 20px rgba(34,197,94,.25);
+      color: white;
+    }
+    button[type="submit"]:active { transform: translateY(1px); }
+
+    .helper {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .error { color: var(--error); }
+
+    footer {
+      margin-top: 18px; text-align: center; color: var(--muted); font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+  <form class="card" id="registrationForm" action="submit.php" method="post" novalidate>
+    <h1>Create Account</h1>
+    <p class="sub">Fill in your details to register.</p>
+
+    <label for="name">Full Name</label>
+    <div class="field">
+      <input id="name" name="name" type="text" placeholder="e.g., Swati Zampal" required minlength="2" />
+    </div>
+    <div class="helper" id="nameHelp">Name should be at least 2 characters.</div>
+
+    <label for="password">Password</label>
+    <div class="field">
+      <input id="password" name="password" type="password" placeholder="Enter a strong password" required 
+             pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}" aria-describedby="pwHelp" />
+      <button class="toggle-btn" type="button" aria-label="Show password" id="togglePw">Show</button>
+    </div>
+    <div class="helper" id="pwHelp">At least 8 characters, with letters and numbers.</div>
+    <div class="helper error" id="formError" style="display:none"></div>
+
+    <div class="actions">
+      <button type="reset">Clear</button>
+      <button type="submit">Register</button>
+    </div>
+
+    <footer>
+      This is a front-end demo. Replace <code>action="#" with your server endpoint.
+    </footer>
+  </form>
+
+  <script>
+    // Show / hide password
+    const pw = document.getElementById('password');
+    const toggle = document.getElementById('togglePw');
+    toggle.addEventListener('click', () => {
+      const isPassword = pw.type === 'password';
+      pw.type = isPassword ? 'text' : 'password';
+      toggle.textContent = isPassword ? 'Hide' : 'Show';
+      toggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    });
+
+    // Simple client-side validation
+    const form = document.getElementById('registrationForm');
+    const nameInput = document.getElementById('name');
+    const errorBox = document.getElementById('formError');
+
+    form.addEventListener('submit', (e) => {
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+
+      if (!nameInput.value.trim()) {
+        e.preventDefault();
+        errorBox.textContent = 'Please enter your name.';
+        errorBox.style.display = 'block';
+        nameInput.focus();
+        return;
+      }
+
+      if (!pw.value.match(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}/)) {
+        e.preventDefault();
+        errorBox.textContent = 'Password must be 8+ characters and include letters and numbers.';
+        errorBox.style.display = 'block';
+        pw.focus();
+        return;
+      }
+
+      // Demo: prevent actual navigation and show a message
+      e.preventDefault();
+      alert(`Registered!\nName: ${nameInput.value}`);
+      form.reset();
+      toggle.textContent = 'Show';
+      pw.type = 'password';
+    });
+  </script>
+</body>
+</html>
