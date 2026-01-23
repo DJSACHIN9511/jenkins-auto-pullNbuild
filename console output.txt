@@ -1,0 +1,27 @@
+Started by user Sachin Jaiswal
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/webserver-update
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/webserver-update/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/DJSACHIN9511/jenkins-auto-pullNbuild.git # timeout=10
+Fetching upstream changes from https://github.com/DJSACHIN9511/jenkins-auto-pullNbuild.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/DJSACHIN9511/jenkins-auto-pullNbuild.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/main
+Seen 1 remote branch
+ > git show-ref --tags -d # timeout=10
+Checking out Revision c6e11029de00ac85a9f6413109489261a0c63669 (origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f c6e11029de00ac85a9f6413109489261a0c63669 # timeout=10
+Commit message: "Add files via upload"
+ > git rev-list --no-walk c6e11029de00ac85a9f6413109489261a0c63669 # timeout=10
+SSH: Connecting from host [Varey-Level]
+SSH: Connecting with configuration [web] ...
+SSH: EXEC: completed after 603 ms
+SSH: Disconnecting configuration [web] ...
+SSH: Transferred 3 file(s)
+Build step 'Send files or execute commands over SSH' changed build result to SUCCESS
+Finished: SUCCESS
