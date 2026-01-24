@@ -68,5 +68,9 @@ The pipeline continuously monitors a GitHub repository for changes and deploys t
 
 ---
 
-## 👤 Author
-Sachin Jaiswal
+## 👨‍💻 Author
+**Sachin Jaiswal**  
+Cloud Engineer | AWS Enthusiast | DevOps
+📧 djsachin9511@gmail.com 
+🔗 https://www.linkedin.com/in/djsachin
+
